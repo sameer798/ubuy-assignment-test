@@ -8,6 +8,7 @@ function Login({ setWelcome }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [isPassword, setIsPassword] = useState(true)
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -112,7 +113,7 @@ function Login({ setWelcome }) {
                 type="email"
                 autoComplete="email"
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
-                placeholder="Enter your email"
+                placeholder={`${isPassword ? "Enter your email*" : "OTP*"}`}
                 onChange={emailHandler}
               />
             </div>
@@ -122,14 +123,14 @@ function Login({ setWelcome }) {
                 <li className="flex-1">
                   <button
                     type="button"
-                    className="w-full bg-[#ffb100] rounded-l-md p-[10px] font-semibold"
-                    onClick={() => setShowSignUpPassword(true)}
+                    className={`w-full  rounded-l-md p-[10px] font-semibold ${isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}
+                    onClick={() => {setShowSignUpPassword(true); setIsPassword(true)}}
                   >
                     Password
                   </button>
                 </li>
                 <li className="flex-1">
-                  <button className="w-full bg-[#eeeeee] rounded-r-md p-[10px] font-semibold text-[#999999]">
+                  <button onClick={()=> setIsPassword(false)} className={`w-full  rounded-r-md p-[10px] font-semibold ${!isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}>
                     OTP
                   </button>
                 </li>
