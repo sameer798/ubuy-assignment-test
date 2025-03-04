@@ -240,7 +240,7 @@ function Login({ setWelcome }) {
 
             <button
               type="submit"
-              className="w-full bg-[#ffb100] text-black p-2 font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="w-full bg-[#ffb100] text-black p-2 font-semibold rounded-md focus:outline-none  hover:cursor-pointer"
             >
               {isLogin ? "Login" : "Sign Up"}
             </button>
