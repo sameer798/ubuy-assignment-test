@@ -98,7 +98,8 @@ function Login({ setWelcome }) {
               }`}
               onClick={() => {
                 setIsLogin(false);
-                setShowSignUpPassword(false);
+                setShowSignUpPassword(true); // Show password fields by default
+                setIsPassword(true); // Set isPassword to true
                 setError("");
               }}
             >
@@ -113,7 +114,7 @@ function Login({ setWelcome }) {
                 type="email"
                 autoComplete="email"
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
-                placeholder={isPassword ? "Enter your email*" : "OTP*"}
+                placeholder={isPassword ? "Enter your email*" : !isLogin && isPassword ? "Enter your email*" : "OTP*"}
                 onChange={emailHandler}
               />
             </div>
@@ -207,7 +208,7 @@ function Login({ setWelcome }) {
               )}
             </div>
 
-            {!isLogin && !isPassword && (
+            {!isLogin && (
               <ReCAPTCHA sitekey="6LcwFukqAAAAALyTcrN1SzHMf1Joz3ypdOEuIyfN" />
             )}
 
