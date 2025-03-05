@@ -209,7 +209,7 @@ function Login({ setWelcome }) {
             </div>
 
             {!isLogin && (
-              <ReCAPTCHA sitekey="6LcwFukqAAAAALyTcrN1SzHMf1Joz3ypdOEuIyfN" />
+              <ReCAPTCHA sitekey="6Le-CeoqAAAAAL8Eot2DtbsLgneV9IUOesL6zElD" />
             )}
 
             {!isLogin && !isPassword && (
