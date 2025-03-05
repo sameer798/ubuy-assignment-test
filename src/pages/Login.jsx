@@ -8,7 +8,7 @@ function Login({ setWelcome }) {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const [isPassword, setIsPassword] = useState(true)
+  const [isPassword, setIsPassword] = useState(true);
   const [showSignUpPassword, setShowSignUpPassword] = useState(false);
   const [enteredEmail, setEnteredEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +62,7 @@ function Login({ setWelcome }) {
     navigate("/welcome");
     setWelcome(true);
 
-    localStorage.setItem("welcome", "eccepted");
+    localStorage.setItem("welcome", "accepted");
 
     setEnteredEmail("");
     setPassword("");
@@ -113,7 +113,7 @@ function Login({ setWelcome }) {
                 type="email"
                 autoComplete="email"
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none"
-                placeholder={`${isPassword ? "Enter your email*" : "OTP*"}`}
+                placeholder={isPassword ? "Enter your email*" : "OTP*"}
                 onChange={emailHandler}
               />
             </div>
@@ -123,20 +123,30 @@ function Login({ setWelcome }) {
                 <li className="flex-1">
                   <button
                     type="button"
-                    className={`w-full  rounded-l-md p-[10px] font-semibold ${isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}
-                    onClick={() => {setShowSignUpPassword(true); setIsPassword(true)}}
+                    className={`w-full rounded-l-md p-[10px] font-semibold ${isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}
+                    onClick={() => {
+                      setShowSignUpPassword(true);
+                      setIsPassword(true);
+                    }}
                   >
                     Password
                   </button>
                 </li>
                 <li className="flex-1">
-                  <button onClick={()=> setIsPassword(false)} className={`w-full  rounded-r-md p-[10px] font-semibold ${!isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsPassword(false);
+                      setShowSignUpPassword(false); // Hide password fields when OTP is selected
+                    }}
+                    className={`w-full rounded-r-md p-[10px] font-semibold ${!isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}
+                  >
                     OTP
                   </button>
                 </li>
               </ul>
 
-              {isLogin && (
+              {isLogin && isPassword && (
                 <div className="relative rounded-md shadow-sm w-full sm:w-[60%]">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -152,21 +162,15 @@ function Login({ setWelcome }) {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeSlashIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
+                      <EyeSlashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     ) : (
-                      <EyeIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
+                      <EyeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                     )}
                   </button>
                 </div>
               )}
 
-              {!isLogin && showSignUpPassword && (
+              {!isLogin && showSignUpPassword && isPassword && (
                 <div className="w-full sm:w-[60%]">
                   <div className="relative rounded-md shadow-sm mb-2">
                     <input
@@ -183,15 +187,9 @@ function Login({ setWelcome }) {
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
-                        <EyeSlashIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        <EyeSlashIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                       ) : (
-                        <EyeIcon
-                          className="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
+                        <EyeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                       )}
                     </button>
                   </div>
@@ -209,11 +207,11 @@ function Login({ setWelcome }) {
               )}
             </div>
 
-            {!isLogin && (
+            {!isLogin && !isPassword && (
               <ReCAPTCHA sitekey="6LcwFukqAAAAALyTcrN1SzHMf1Joz3ypdOEuIyfN" />
             )}
 
-            {!isLogin && (
+            {!isLogin && !isPassword && (
               <div className="flex mb-3 ">
                 <input
                   className="form-control checkbox checkbox-primary"
@@ -230,18 +228,17 @@ function Login({ setWelcome }) {
               </div>
             )}
 
-            
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
             {isLogin && (
               <p className="text-right underline text-sm text-[#999999] font-bold hover:cursor-pointer">
-                Forgot Your Password?
+                <a href="https://accounts.google.com/" target="_blank">Forgot Your Password?</a>
               </p>
             )}
 
             <button
               type="submit"
-              className="w-full bg-[#ffb100] text-black p-2 font-semibold rounded-md focus:outline-none  hover:cursor-pointer"
+              className="w-full bg-[#ffb100] text-black p-2 font-semibold rounded-md focus:outline-none hover:cursor-pointer"
             >
               {isLogin ? "Login" : "Sign Up"}
             </button>
@@ -254,10 +251,10 @@ function Login({ setWelcome }) {
 
             <div className="border border-gray-200 flex flex-col justify-between p-4 rounded-md sm:flex-row">
               <div className="flex justify-center space-x-2 text-2xl">
-                <FaGoogle className="text-red-500 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" />
-                <FaPaypal className="text-blue-500 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" />
-                <FaApple className="text-gray-500 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" />
-                <FaFacebook className="text-blue-600 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" />
+                <a href="https://www.google.com/" target="_blank"><FaGoogle className="text-red-500 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" /></a>
+                <a href="https://www.paypal.com/in/home" target="_blank"><FaPaypal className="text-blue-500 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" /></a>
+                <a href="https://www.apple.com/in/" target="_blank"><FaApple className="text-gray-500 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" /></a>
+                <a href="https://www.facebook.com/" target="_blank"><FaFacebook className="text-blue-600 hover:bg-[#ffb100] hover:rounded-full hover:p-1 hover:cursor-pointer" /></a>
               </div>
 
               <div>
