@@ -1,0 +1,23 @@
+.form-floating {
+    position: relative;
+  }
+  
+  .form-floating input {
+    padding-top: 1.5rem; /* Adjust based on your design */
+  }
+  
+  .form-floating label {
+    position: absolute;
+    left: 0.75rem; /* Adjust based on your design */
+    top: 0.8rem; /* Adjust based on your design */
+    transition: all 0.2s ease;
+    pointer-events: none;
+  }
+  
+  .form-floating input:focus + label,
+  .form-floating input.has-value + label {
+    top: 0.2rem; /* Adjust based on your design */
+    left: 0.75rem; /* Adjust based on your design */
+    font-size: 0.75rem; /* Adjust based on your design */
+    color: #6b7280; /* Adjust based on your design */
+  }
