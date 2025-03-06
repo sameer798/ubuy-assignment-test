@@ -191,6 +191,9 @@
   .absolute {
     position: absolute;
   }
+  .fixed {
+    position: fixed;
+  }
   .inset-y-0 {
     inset-block: calc(var(--spacing) * 0);
   }
