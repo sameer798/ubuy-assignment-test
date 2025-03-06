@@ -1,126 +1,48 @@
-import React, { useState } from "react";
+// Login.js
+
+import React from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { FaGoogle, FaPaypal, FaApple, FaFacebook } from "react-icons/fa";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
+import useLoginLogic from "./useLoginLogic"; // Import the custom hook
+
 import "./LoginStyle.css";
 
-function Login({ setWelcome }) {
+function Login() {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLogin, setIsLogin] = useState(true);
-  const [isPassword, setIsPassword] = useState(true);
-  const [showSignUpPassword, setShowSignUpPassword] = useState(false);
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorEmail, setErrorEmail] = useState("");
-  const [errorPassword, setErrorPassword] = useState("");
-  const [errorConfirmPassword, setErrorConfirmPassword] = useState("");
-  const [optInputState, setOtpInputState] = useState(false);
-  const [enteredOtp, setEnteredOtp] = useState("");
-  const [errorOtp, setErrorOtp] = useState("");
-  const [recaptchaValue, setRecaptchaValue] = useState(null);
-  const [errorRecaptcha, setErrorRecaptcha] = useState("");
-
-  const emailHandler = (e) => {
-    setEnteredEmail(e.target.value);
-    if (errorEmail) {
-      setErrorEmail("");
-    }
-  };
-
-  const otpHandler = (e) => {
-    setEnteredOtp(e.target.value);
-    if (errorOtp) {
-      setErrorOtp("");
-    }
-  };
-
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-    if (errorPassword) {
-      setErrorPassword("");
-    }
-  };
-
-  const confirmPasswordHandler = (e) => {
-    setConfirmPassword(e.target.value);
-    if (errorConfirmPassword) {
-      setErrorConfirmPassword("");
-    }
-  };
-
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  const validatePassword = (password) => {
-    return password.length >= 6;
-  };
-
-  const handleRecaptchaChange = (value) => {
-    setRecaptchaValue(value);
-    if (errorRecaptcha) {
-      setErrorRecaptcha("");
-    }
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    // Reset error messages
-    setErrorEmail("");
-    setErrorPassword("");
-    setErrorConfirmPassword("");
-    setErrorOtp("");
-    setErrorRecaptcha("");
-
-    // Validate email
-    if (!validateEmail(enteredEmail)) {
-      setErrorEmail("Please enter a valid email address.");
-      return;
-    }
-
-    // Validate password
-    if (!validatePassword(password)) {
-      setErrorPassword("Password must be at least 6 characters long.");
-      return;
-    }
-
-    // For Sign Up, validate confirm password
-    if (!isLogin && password !== confirmPassword) {
-      setErrorConfirmPassword("Passwords do not match.");
-      return;
-    }
-
-    // Validate OTP if in OTP state
-    if (optInputState && !enteredOtp) {
-      setErrorOtp("OTP is required.");
-      return;
-    }
-
-    // Validate ReCAPTCHA if registering
-    if (!isLogin && !recaptchaValue) {
-      setErrorRecaptcha("Please verify that you are not a robot.");
-      return;
-    }
-
-    alert("Form submitted successfully!");
-    navigate("/welcome");
-    setWelcome(true);
-
-    localStorage.setItem("welcome", "accepted");
-
-    // Reset fields
-    setEnteredEmail("");
-    setPassword("");
-    setConfirmPassword("");
-    setEnteredOtp("");
-    setRecaptchaValue(null);
-  };
+  const {
+    showPassword,
+    setShowPassword,
+    showConfirmPassword,
+    setShowConfirmPassword,
+    isLogin,
+    setIsLogin,
+    isPassword,
+    setEnteredOtp,
+    setPassword,
+    setIsPassword,
+    showSignUpPassword,
+    setShowSignUpPassword,
+    enteredEmail,
+    password,
+    confirmPassword,
+    errorEmail,
+    errorPassword,
+    errorConfirmPassword,
+    optInputState,
+    enteredOtp,
+    errorOtp,
+    // recaptchaValue,
+    errorRecaptcha,
+    emailHandler,
+    otpHandler,
+    passwordHandler,
+    confirmPasswordHandler,
+    handleRecaptchaChange,
+    submitHandler,
+    setOtpInputState,
+  } = useLoginLogic(navigate); // Use the custom hook
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -136,11 +58,7 @@ function Login({ setWelcome }) {
               onClick={() => {
                 setIsLogin(true);
                 setShowSignUpPassword(false);
-                setErrorEmail("");
-                setErrorPassword("");
-                setErrorConfirmPassword("");
-                setErrorOtp("");
-                setErrorRecaptcha("");
+                setOtpInputState(false); // Reset OTP input state
               }}
             >
               Login
@@ -154,11 +72,6 @@ function Login({ setWelcome }) {
                 setOtpInputState(false);
                 setShowSignUpPassword(true);
                 setIsPassword(true);
-                setErrorEmail("");
-                setErrorPassword("");
-                setErrorConfirmPassword("");
-                setErrorOtp("");
-                setErrorRecaptcha("");
               }}
             >
               Sign Up
@@ -184,9 +97,9 @@ function Login({ setWelcome }) {
                   type="button"
                   className={`w-full rounded-l-sm p-[10px] font-semibold transition duration-300 ease-in-out ${isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}
                   onClick={() => {
-                    setShowSignUpPassword(true);
                     setIsPassword(true);
                     setOtpInputState(false);
+                    setEnteredOtp("");
                   }}
                 >
                   Password
@@ -197,8 +110,8 @@ function Login({ setWelcome }) {
                   type="button"
                   onClick={() => {
                     setIsPassword(false);
-                    setShowSignUpPassword(false);
                     setOtpInputState(true);
+                    setPassword("");
                   }}
                   className={`w-full rounded-r-sm p-[10px] font-semibold transition duration-300 ease-in-out ${!isPassword ? "bg-[#ffb100] text-black" : "bg-[#eeeeee] text-[#999999]"}`}
                 >
@@ -207,26 +120,13 @@ function Login({ setWelcome }) {
               </div>
             </div>
 
-            {isLogin && optInputState && (
+            {optInputState && (
               <div className="form-floating mb-5">
                 <input
                   value={enteredOtp}
                   onChange={otpHandler}
                   type="text"
-                  className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${enteredEmail ? "has-value" : ""}`}
-                />
-                <label htmlFor="otp" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">OTP*</label>
-                {errorOtp && <p className="text-red-500 text-sm">{errorOtp}</p>}
-              </div>
-            )}
-
-            {!isLogin && optInputState && (
-              <div className="form-floating mb-5">
-                <input
-                  value={enteredOtp}
-                  onChange={otpHandler}
-                  type="text"
-                  className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${enteredEmail ? "has-value" : ""}`}
+                  className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${enteredOtp ? "has-value" : ""}`}
                 />
                 <label htmlFor="otp" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">OTP*</label>
                 {errorOtp && <p className="text-red-500 text-sm">{errorOtp}</p>}
@@ -326,7 +226,7 @@ function Login({ setWelcome }) {
               <div className="mb-4">
                 <ReCAPTCHA
                   className="mb-0"
-                  sitekey="6LdCPesqAAAAABq8f8rH3fSj3BZwdOAlXMNbEJ5L"
+                  sitekey="6LcwFukqAAAAALyTcrN1SzHMf1Joz3ypdOEuIyfN"
                   onChange={handleRecaptchaChange}
                 />
                 {errorRecaptcha && <p className="text-red-500 text-sm">{errorRecaptcha}</p>}
