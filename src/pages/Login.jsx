@@ -326,7 +326,7 @@ function Login({ setWelcome }) {
               <div className="mb-4">
                 <ReCAPTCHA
                   className="mb-0"
-                  sitekey="6LcwFukqAAAAALyTcrN1SzHMf1Joz3ypdOEuIyfN"
+                  sitekey="6LdCPesqAAAAABq8f8rH3fSj3BZwdOAlXMNbEJ5L"
                   onChange={handleRecaptchaChange}
                 />
                 {errorRecaptcha && <p className="text-red-500 text-sm">{errorRecaptcha}</p>}
