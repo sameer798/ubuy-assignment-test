@@ -128,7 +128,7 @@ function Login() {
                   type="text"
                   className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${enteredOtp ? "has-value" : ""}`}
                 />
-                <label htmlFor="otp" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">OTP*</label>
+                <label htmlFor="otp" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">OTP *</label>
                 {errorOtp && <p className="text-red-500 text-sm">{errorOtp}</p>}
               </div>
             )}
@@ -141,7 +141,7 @@ function Login() {
                   type={showPassword ? "text" : "password"}
                   className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${password ? "has-value" : ""}`}
                 />
-                <label htmlFor="password" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">Enter Password*</label>
+                <label htmlFor="password" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">Enter Password *</label>
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 pt-1 flex items-center"
@@ -166,7 +166,7 @@ function Login() {
                     type={showPassword ? "text" : "password"}
                     className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${password ? "has-value" : ""}`}
                   />
-                  <label htmlFor="password" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">Enter Password*</label>
+                  <label htmlFor="password" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">Enter Password *</label>
                   <button
                     type="button"
                     className="absolute inset-y-0 right-0 pr-3 pt-1 flex items-center"
@@ -188,7 +188,7 @@ function Login() {
                     type={showConfirmPassword ? "text" : "password"}
                     className={`form-control required-entry validate-email email w-full p-1 px-3 border border-gray-300 rounded-md focus:outline-none ${confirmPassword ? "has-value" : ""}`}
                   />
-                  <label htmlFor="confirm-password" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">Confirm Password*</label>
+                  <label htmlFor="confirm-password" className="absolute left-3 top-2 text-gray-500 transition-all duration-200 transform origin-left scale-100">Confirm Password *</label>
                   <button
                     type="button"
                     className="absolute inset-y-0 right-0 pr-3 pt-1 flex items-center"
@@ -226,7 +226,7 @@ function Login() {
               <div className="mb-4">
                 <ReCAPTCHA
                   className="mb-0"
-                  sitekey="6Le-CeoqAAAAAL8Eot2DtbsLgneV9IUOesL6zElD"
+                  sitekey="6LcwFukqAAAAALyTcrN1SzHMf1Joz3ypdOEuIyfN"
                   onChange={handleRecaptchaChange}
                 />
                 {errorRecaptcha && <p className="text-red-500 text-sm">{errorRecaptcha}</p>}
